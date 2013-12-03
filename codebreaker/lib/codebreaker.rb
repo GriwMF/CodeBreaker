@@ -23,27 +23,29 @@ module Codebreaker
       return false unless valid?(g)
       @turns -= 1
       answer = []
-      done = g.clone
+      ges = g.clone
       tmp = @code.clone
 
-      g.split(//).each_with_index do |value, index|
-        if value == tmp[index]
+      ges.size.times do |index|
+        if ges[index] == tmp[index]
           answer << '+'
           tmp[index] = '0'
-          g[index] = 'a'
+          ges[index] = 'a'
         end
       end
-      tmp.split(//).each do |value|  
-        if g.include? value
+      
+      tmp.each_char do |value|  
+        if ges.include? value
           answer << '-'
-          g.sub!(value, 'a')
+          ges.sub!(value, 'a')
         end
       end
+
       ret = 1 if answer == ['+', '+', '+', '+']
       
       ret ||= 0 if @turns == 0 
-      ret ||= answer.sort.join
-      @log << {a: ret, guess: done}
+      ret ||= answer.join
+      @log << {a: ret, guess: g}
       ret
     end
     
@@ -53,7 +55,6 @@ module Codebreaker
       file.puts("Code was #{@code}.")
       file.puts("Max turns was #{@turns_was}.")
       @log.each{|x| yield(file, x)}
-      
       file.puts("===============")
       ensure
         file.close if file

@@ -10,7 +10,7 @@ module Codebreaker
         expect(game.instance_variable_get(:@turns)).to eq(5)
       end
       
-      it "sets turns to 1 is argument <= 0" do
+      it "sets turns to 1 if argument <= 0" do
         game.start(0)
         expect(game.instance_variable_get(:@turns)).to eq(1)
       end
