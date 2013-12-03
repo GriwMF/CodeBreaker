@@ -58,6 +58,13 @@ module Codebreaker
       end
     end
     
+    context "#hint" do
+      it "should return string with one digit of @code" do
+        game.instance_variable_set(:@code, "1111")
+        expect(game.hint).to eq("1")
+      end   
+    end
+    
     context "#log" do
       it "should logs to file" do
         game.start(1)

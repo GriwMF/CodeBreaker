@@ -49,6 +49,10 @@ module Codebreaker
       ret
     end
     
+    def hint
+      @code[rand(@code.size)]
+    end
+    
     def log(dir)
       file = File.open(dir, 'a')
       file.puts("Hello, #{@name}.")
